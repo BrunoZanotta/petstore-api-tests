@@ -5,25 +5,42 @@ on:
     branches: [ main ]
 
 jobs:
-
-  contract-test:
-    name: Contract Test
+  healthcheck:
+    name: HealthCheck
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Set up JDK 23
         uses: actions/setup-java@v3
         with:
           java-version: '23'
           distribution: 'temurin'
           cache: maven
+      - name: Run HealthCheck with Maven
+        run: mvn clean test -Dsurefire.suiteXmlFiles=testng-healthcheck.xml
+      - name: Upload HealthCheck Report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: healthcheck-report
+          path: target/surefire-reports
 
+  contract-test:
+    name: Contract Test
+    runs-on: ubuntu-latest
+    needs: healthcheck
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up JDK 23
+        uses: actions/setup-java@v3
+        with:
+          java-version: '23'
+          distribution: 'temurin'
+          cache: maven
       - name: Run Contract Tests with Maven
         run: mvn clean test -Dsurefire.suiteXmlFiles=testng-contract.xml
-
       - name: Upload Contract Test Report
         if: failure()
         uses: actions/upload-artifact@v4
@@ -35,24 +52,21 @@ jobs:
     name: Functional Test
     runs-on: ubuntu-latest
     needs: contract-test
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Set up JDK 23
         uses: actions/setup-java@v3
         with:
           java-version: '23'
           distribution: 'temurin'
           cache: maven
-
       - name: Run Functional Tests with Maven
         run: mvn clean test -Dsurefire.suiteXmlFiles=testng-functional.xml
-
       - name: Upload Functional Test Report
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: functional-test-report
           path: target/surefire-reports
+

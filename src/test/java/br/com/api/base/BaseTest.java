@@ -13,7 +13,8 @@ public class BaseTest {
 
     @BeforeClass
     public void setUp() {
-        RestAssured.baseURI = "https://petstore.swagger.io/v2";
+        RestAssured.baseURI = "https://petstore.swagger.io";
+        RestAssured.basePath = "/v2";
         spec = new RequestSpecBuilder()
                 .setRelaxedHTTPSValidation()
                 .setContentType(ContentType.JSON)
