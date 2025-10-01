@@ -24,7 +24,6 @@ public class FunctionalPostUserTest extends BaseTest {
                     .body("message", equalTo(String.valueOf(requestUser.getId())));
     }
 
-
     @Test(dataProvider = "createUserWithUserNameNull", dataProviderClass = PostUserDataProvider.class)
     public void validateFunctionalPostUserWithUserNameNull(User requestUser) {
         userApi.createUser()

@@ -5,7 +5,6 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.BeforeClass;
-
 import static io.restassured.RestAssured.enableLoggingOfRequestAndResponseIfValidationFails;
 
 public class BaseTest {

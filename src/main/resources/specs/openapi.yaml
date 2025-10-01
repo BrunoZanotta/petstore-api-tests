@@ -748,7 +748,6 @@
             "headers": {
               "X-Expires-After": {
                 "type": "string",
-                "format": "date-time",
                 "description": "date in UTC when token expires"
               },
               "X-Rate-Limit": {
@@ -758,7 +757,7 @@
               }
             },
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/ApiResponse"
             }
           },
           "400": {
