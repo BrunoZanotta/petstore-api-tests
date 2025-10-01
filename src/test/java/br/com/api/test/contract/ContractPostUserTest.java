@@ -18,7 +18,7 @@ public class ContractPostUserTest extends BaseTest {
     private final UserApi userApi = UserApi.user(() -> new RequestSpecBuilder().addFilter(validationFilter));
 
     @Test(dataProvider = "createUserSuccess", dataProviderClass = PostUserDataProvider.class)
-    public void testCreateUserContract(User requestUser) {
+    public void validateContractPostUser(User requestUser) {
         userApi.createUser()
                 .body(requestUser)
                 .execute(Validatable::then)
