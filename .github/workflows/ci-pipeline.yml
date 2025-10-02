@@ -86,7 +86,7 @@ jobs:
           pattern: allure-results-*
           merge-multiple: true
       - name: Generate Allure Report
-        uses: allure-framework/allure-action@v3
+        uses: allure-framework/allure-action@v2
         with:
           results_path: allure-results
       - name: Deploy report to GitHub Pages
