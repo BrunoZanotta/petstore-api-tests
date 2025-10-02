@@ -4,6 +4,9 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: write
+
 jobs:
   healthcheck:
     name: HealthCheck
@@ -88,9 +91,11 @@ jobs:
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@v1
         with:
-          results_path: allure-results
+          results_path: allure-results/target/allure-results
+          report_path: allure-report
       - name: Deploy report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
+
